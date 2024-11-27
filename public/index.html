@@ -78,7 +78,7 @@
 
                 if (isMobileDevice()) {
                     // Redirect to app with authentication parameters
-                    const deepLink = `https://authenticate?emailLink=${emailLink}&continueUrl=${encodeURIComponent(continueUrl || '')}`;
+                    const deepLink = `https://habitect-8d17e.web.app/authenticate?emailLink=${emailLink}&continueUrl=${encodeURIComponent(continueUrl || '')}`;
                     window.location.href = deepLink;
                 } else {
                     // Show mobile-only message
