@@ -71,14 +71,15 @@
                 const urlParams = new URLSearchParams(window.location.search);
                 const continueUrl = urlParams.get('continueUrl');
                 const emailLink = urlParams.get('oobCode');
+                const email = urlParams.get('email');
 
-                if (!emailLink) {
+                if (!emailLink || !email) {
                     throw new Error('Invalid or missing authentication link');
                 }
 
                 if (isMobileDevice()) {
                     // Redirect to app with authentication parameters
-                    const deepLink = `https://habitect-8d17e.web.app/authenticate?emailLink=${emailLink}&continueUrl=${encodeURIComponent(continueUrl || '')}`;
+                    const deepLink = `https://habitect-8d17e.web.app/authenticate?emailLink=${emailLink}&continueUrl=${encodeURIComponent(continueUrl || '')}${email ? `&email=${email}` : ''}`;
                     window.location.href = deepLink;
                 } else {
                     // Show mobile-only message
