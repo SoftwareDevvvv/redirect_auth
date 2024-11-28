@@ -68,18 +68,20 @@
             }
 
             try {
-                const urlParams = new URLSearchParams(window.location.search);
-                const continueUrl = urlParams.get('continueUrl');
-                const emailLink = urlParams.get('oobCode');
-                const email = urlParams.get('email');
-
-                if (!emailLink || !email) {
-                    throw new Error('Invalid or missing authentication link');
+               // checks if the token is valid 
+                const token = new URLSearchParams(window.location.search).get('token');
+                if (!token){
+                    throw Error("no token available")
                 }
 
+                const response = fetch(`https://localhost:3000/authenticate?token=${token}`);
+                if (!response.ok) {
+                    throw Error('Invalid token');
+                }
+                
                 if (isMobileDevice()) {
                     // Redirect to app with authentication parameters
-                    const deepLink = `https://habitect-8d17e.web.app/authenticate?emailLink=${emailLink}&continueUrl=${encodeURIComponent(continueUrl || '')}${email ? `&email=${email}` : ''}`;
+                    const deepLink = `https://habitect-8d17e.web.app/authenticate?token=${token}`;
                     window.location.href = deepLink;
                 } else {
                     // Show mobile-only message
